@@ -4,14 +4,16 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MovieShopDbContext))]
-    partial class MovieShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210812220435_CreateMovieCrewRelation")]
+    partial class CreateMovieCrewRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,7 +278,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("decimal(3,2)");
 
                     b.Property<string>("ReviewText")
-                        .HasMaxLength(4096)
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MovieId", "UserId");
@@ -334,7 +335,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AccessFailedCount")
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -354,10 +355,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
-                    b.Property<bool?>("IsLocked")
+                    b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("LastLoginDateTime")
+                    b.Property<DateTime>("LastLoginDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
@@ -366,7 +367,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<DateTime?>("LockoutEndDate")
+                    b.Property<DateTime>("LockoutEndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
@@ -379,7 +380,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
-                    b.Property<bool?>("TwoFactorEnabled")
+                    b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");

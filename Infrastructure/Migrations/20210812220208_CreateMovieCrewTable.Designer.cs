@@ -4,14 +4,16 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MovieShopDbContext))]
-    partial class MovieShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210812220208_CreateMovieCrewTable")]
+    partial class CreateMovieCrewTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,6 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("MovieId", "CrewId", "Department", "Job");
 
-                    b.HasIndex("CrewId");
-
                     b.ToTable("MovieCrew");
                 });
 
@@ -276,7 +276,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("decimal(3,2)");
 
                     b.Property<string>("ReviewText")
-                        .HasMaxLength(4096)
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MovieId", "UserId");
@@ -334,7 +333,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AccessFailedCount")
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -354,10 +353,10 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
-                    b.Property<bool?>("IsLocked")
+                    b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("LastLoginDateTime")
+                    b.Property<DateTime>("LastLoginDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
@@ -366,7 +365,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
-                    b.Property<DateTime?>("LockoutEndDate")
+                    b.Property<DateTime>("LockoutEndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
@@ -379,7 +378,7 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
-                    b.Property<bool?>("TwoFactorEnabled")
+                    b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -451,25 +450,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Cast");
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("ApplicationCore.Entities.MovieCrew", b =>
-                {
-                    b.HasOne("ApplicationCore.Entities.Crew", "Crew")
-                        .WithMany("MovieCrews")
-                        .HasForeignKey("CrewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ApplicationCore.Entities.Movie", "Movie")
-                        .WithMany("MovieCrews")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Crew");
 
                     b.Navigation("Movie");
                 });
@@ -558,18 +538,11 @@ namespace Infrastructure.Migrations
                     b.Navigation("MovieCasts");
                 });
 
-            modelBuilder.Entity("ApplicationCore.Entities.Crew", b =>
-                {
-                    b.Navigation("MovieCrews");
-                });
-
             modelBuilder.Entity("ApplicationCore.Entities.Movie", b =>
                 {
                     b.Navigation("Favorites");
 
                     b.Navigation("MovieCasts");
-
-                    b.Navigation("MovieCrews");
 
                     b.Navigation("Purchases");
 
