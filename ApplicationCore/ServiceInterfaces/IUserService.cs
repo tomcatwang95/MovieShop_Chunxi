@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ApplicationCore.ServiceInterfaces
 {
-    public interface IMovieService
+    public interface IUserService
     {
-        Task<List<MovieCardResponseModel>> GetTopRevenueMovies();
-
-        Task<MovieDetailsResponseModel> GetMovieDetails(int id);
+        Task<UserRegisterResponseModel> RegisterUser(UserRegisterRequestModel model);
+        Task<UserLoginResponseModel> Login(LoginRequestModel model);
     }
 }

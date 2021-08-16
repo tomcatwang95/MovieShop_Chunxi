@@ -3,29 +3,66 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ApplicationCore.ServiceInterfaces;
 using ApplicationCore.Models;
+using ApplicationCore.RepositoryInterfaces;
+using ApplicationCore.ServiceInterfaces;
 
 namespace Infrastructure.Services
 {
-    public class MovieService:IMovieService
+    public class MovieService : IMovieService
     {
-        public List<MovieCardResponseModel> GetTopRevenueMovies()
+        private readonly IMovieRepository _movieRepository;
+        public MovieService(IMovieRepository movieRepository)
+        {
+            _movieRepository = movieRepository;
+        }
+
+        public async Task<MovieDetailsResponseModel> GetMovieDetails(int id)
+        {
+            var movie = await _movieRepository.GetByIdAsync(id);
+
+            var movieDetailsModel = new MovieDetailsResponseModel
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Rating = movie.Rating
+            };
+
+            movieDetailsModel.Casts = new List<CastResponseModel>();
+
+            foreach (var cast in movie.MovieCasts)
+            {
+                movieDetailsModel.Casts.Add(new CastResponseModel
+                {
+                    Id = cast.CastId,
+                    Name = cast.Cast.Name,
+                    Character = cast.Character
+                });
+            }
+
+            movieDetailsModel.Genres = new List<GenreResponseModel>();
+
+            foreach (var genre in movie.Genres)
+            {
+                movieDetailsModel.Genres.Add(new GenreResponseModel { Id = genre.Id, Name = genre.Name });
+            }
+
+            return movieDetailsModel;
+        }
+
+        public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
         {
             // call repositories and get the real data from database
-            var movies = new List<MovieCardResponseModel>()
+            // call the movie repository class
+            var movies = await _movieRepository.Get30HighestRevenueMovies();
+            var movieCards = new List<MovieCardResponseModel>();
+
+            foreach (var movie in movies)
             {
-                new MovieCardResponseModel {Id = 1, Title = "Avengers: Infinity War"},
-                new MovieCardResponseModel {Id = 2, Title = "Avatar"},
-                new MovieCardResponseModel {Id = 3, Title = "Star Wars: The Force Awakens"},
-                new MovieCardResponseModel {Id = 4, Title = "Titanic"},
-                new MovieCardResponseModel {Id = 5, Title = "Inception"},
-                new MovieCardResponseModel {Id = 6, Title = "Avengers: Age of Ultron"},
-                new MovieCardResponseModel {Id = 7, Title = "Interstellar"},
-                new MovieCardResponseModel {Id = 8, Title = "Fight Club"},
-                new MovieCardResponseModel {Id = 9, Title = "The Lord of the Rings: The Fellowship of the Ring" }
-            };
-            return movies;
+                movieCards.Add(new MovieCardResponseModel { Id = movie.Id, Title = movie.Title, PosterUrl = movie.PosterUrl });
+            }
+
+            return movieCards;
         }
     }
 }

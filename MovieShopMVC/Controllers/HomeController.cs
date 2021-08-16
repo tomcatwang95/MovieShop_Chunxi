@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MovieShopMVC.Models;
-using System.Diagnostics;
+﻿using ApplicationCore.ServiceInterfaces;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using MovieShopMVC.Models;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using ApplicationCore.ServiceInterfaces;
+using System.Threading.Tasks;
 
 namespace MovieShopMVC.Controllers
 {
@@ -16,46 +20,45 @@ namespace MovieShopMVC.Controllers
             _movieService = movieService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //get top revenue movie and display on the view
-            var movies = _movieService.GetTopRevenueMovies();
-            //3 ways to pass data from controller to view
-            //1.Strong typed models
-            //2.View Bag
-            //3.View Data
-            //C#
-
-            ViewBag.PageTitle = "Top Revenue Movies";
-            ViewData["TotalMovies"] = movies.Count();
-
-            return View(movies);
+            var movieCards = await _movieService.GetTopRevenueMovies();
+            return View(movieCards);
         }
 
-        //Clean Architecture
+        // Clean Architecture
 
-        //Interfaces
+        // Interfaces
 
-        //IMovieService
-        //class MovieService: IMovieSerivce, IGenreService
-        //{
-        //}
+        // IMovieServices
 
-        //Dependency Injection
-        //Application core layer
-        //Entities => C# classes that represent your domain/databse object =>
-        //Models => 
+        // class MovieService : IMovieService, IGenreService
+        // {
+        // }
+
+        // class MovieService2 : IMovieSrvice
+        // {
+        // }
+
+        // class MovieService3 : SomeClass, IMovieSrvice
+        // {
+        // }
+
+        // Dependency Injection
+        // Application Core Layer
+        // Entities => C# classes that represents your domain/database objects
+        // Models =>
 
         // 15 tables
-        //20 columns in the movie table
-        //Entity => Movie 20 properties
+        // 20 columns, Movie Table
+        // Entity => Movie 20 properties
 
-        //Models => UI
-        //Movie list => MovieCardModel => id, title, posterimage
-        //DTO (Data Transfer Objects) => API
-
+        // Models => UI
+        // Movie list => MovieCardModel => id, title, posterimage
+        // DTO (Data Transfer Objects) => API
         public IActionResult Privacy()
         {
+            // get top revenue movie and display on the view
             return View();
         }
 
