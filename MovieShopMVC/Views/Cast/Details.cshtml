@@ -3,12 +3,35 @@
     <div class="container">
         <div class="row">
             <div class="col-3">
-                <img src="@Model.ProfilePath" style="height:350px;">
+                <img src="@Model.ProfilePath" style="height:300px;">
             </div>
             <div class="col-6">
                 <h1 class="mt-0">@Model.Name </h1>
                 <br />
                 <a class='btn btn-primary ' href="@Model.TmdbUrl">TMDB Link</a>
+            </div>
+            <br />
+            <div class="col-7">
+                <h5>Movies Related</h5>
+                @foreach (var movie in Model.Movies)
+                {
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs">
+                                <img src="@movie.PosterUrl " style="height:100px;" alt="@movie.PosterUrl" />
+                            </div>
+                            <div class="col-md">
+                                <h4>@movie.Title</h4>
+                            </div>
+                            <div class="col-md">
+                                <h4>@movie.ReleaseDate</h4>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="w-100"> </div>
+                }
+
             </div>
         </div>
     </div>
