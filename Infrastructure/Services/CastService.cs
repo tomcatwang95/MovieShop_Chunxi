@@ -39,8 +39,9 @@ namespace Infrastructure.Services
                 {
                     Id = movie.MovieId,
                     Title = movie.Movie.Title,
-                    PosterUrl = movie.Movie.PosterUrl
-                    
+                    PosterUrl = movie.Movie.PosterUrl,
+                    ReleaseDate=movie.Movie.ReleaseDate
+
                 });
             }
 
