@@ -34,6 +34,8 @@ namespace MovieShopMVC
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICastRepository, CastRepository>();
+            services.AddScoped<ICastService, CastService>();
 
             services.AddDbContext<MovieShopDbContext>
                 (
@@ -58,7 +60,7 @@ namespace MovieShopMVC
             app.UseStaticFiles();
 
             app.UseRouting();
-            //app.UseAuthentication();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Middleware

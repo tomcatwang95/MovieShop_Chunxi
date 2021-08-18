@@ -1,0 +1,14 @@
+﻿@model ApplicationCore.Models.CastResponseModel
+
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <img src="@Model.ProfilePath" style="height:350px;">
+            </div>
+            <div class="col-6">
+                <h1 class="mt-0">@Model.Name </h1>
+                <br />
+                <a class='btn btn-primary ' href="@Model.TmdbUrl">TMDB Link</a>
+            </div>
+        </div>
+    </div>

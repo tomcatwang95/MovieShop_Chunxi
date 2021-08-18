@@ -25,6 +25,18 @@ namespace Infrastructure.Services
             {
                 Id = movie.Id,
                 Title = movie.Title,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                Budget = movie.Budget,
+                Revenue = movie.Revenue,
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                OriginalLanguage = movie.OriginalLanguage,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Price = movie.Price,
                 Rating = movie.Rating
             };
 
@@ -36,7 +48,8 @@ namespace Infrastructure.Services
                 {
                     Id = cast.CastId,
                     Name = cast.Cast.Name,
-                    Character = cast.Character
+                    Character = cast.Character,
+                    ProfilePath = cast.Cast.ProfilePath
                 });
             }
 

@@ -1,3 +1,89 @@
-﻿<h1>
-    Movie Details
-</h1>
+﻿@model ApplicationCore.Models.MovieDetailsResponseModel
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <img src="@Model.PosterUrl" style="height:350px;">
+            </div>
+            <div class="col-6">
+                <h1 class="mt-0">@Model.Title</h1>
+                <h5>@Model.Tagline</h5>
+                <h6>@Model.RunTime m | @Model.ReleaseDate </h6>
+                <div>
+                    @foreach (var genre in Model.Genres)
+                    {<a href="#" class="badge badge-secondary">@genre.Name</a> }
+                </div>
+
+                <p>@Model.Overview</p>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-dark btn-block btn-sm">Review</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-outline-dark btn-block btn-sm">Trailer</button>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-dark btn-sm btn-block">Buy @Model.Price</button>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="btn btn-dark btn-sm btn-block">Watch Movie</button>
+                        </div>
+
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+<br />
+    <div class="container">
+        <div class="row">
+            <div class="col-5">
+                <h5>MOVIE FACTS</h5>
+                <p>Release Date <span class="badge badge-dark badge-secondary">@Model.ReleaseDate </span></p>
+                <p>Run Time <span class="badge badge-dark badge-secondary">@Model.RunTime </span></p>
+                <p>Box Office <span class="badge badge-dark badge-secondary">@Model.Revenue </span></p>
+                <p>Budget <span class="badge badge-dark badge-secondary">@Model.Budget </span></p>
+            </div>
+            <div class="col-7">
+                <h5>CAST</h5>
+                @foreach (var cast in Model.Casts)
+                {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs">
+                            <a asp-controller="Cast" asp-action="Details" asp-route-id="@cast.Id"><img src="@cast.ProfilePath " style="height:50px;"  alt="@cast.Name"/></a>
+                        </div>
+                        <div class="col-md">
+                            @cast.Name
+                        </div>
+                        <div class="col-md">
+                            @cast.Character
+                        </div>
+                    </div>
+                </div>
+                }
+                
+            </div>
+        </div>
+    </div>

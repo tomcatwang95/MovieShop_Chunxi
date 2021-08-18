@@ -1,4 +1,5 @@
-﻿using ApplicationCore.RepositoryInterfaces;
+﻿using ApplicationCore.Entities;
+using ApplicationCore.RepositoryInterfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -61,5 +62,6 @@ namespace Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
     }
 }
