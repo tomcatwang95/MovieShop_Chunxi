@@ -1,0 +1,7 @@
+﻿@inject ApplicationCore.ServiceInterfaces.IGenresService _generService
+
+@foreach (var genre in await _generService.GetAllGenres())
+{
+    <a asp-controller="Genre" asp-action="Details" asp-route-id="@genre.Id"></a>
+    <a class="dropdown-item" href="#">@genre.Name</a>
+    }

@@ -12,6 +12,7 @@ namespace Infrastructure.Repositories
 {
     public class UserRepository : EfRepository<User>, IUserRepository
     {
+
         public UserRepository(MovieShopDbContext dbContext) : base(dbContext)
         {
         }
@@ -20,6 +21,14 @@ namespace Infrastructure.Repositories
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
             return user;
+        }
+        public async Task<User> GetUserFavoriteById(int id)
+        {
+            return await _dbContext.Users.Include(u => u.favorites).ThenInclude(u => u.Movie).FirstOrDefaultAsync(u => u.Id == id);
+        }
+        public async Task<User> GetUserPurchaseById(int id)
+        {
+            return await _dbContext.Users.Include(u => u.Purchases).ThenInclude(u => u.Movie).FirstOrDefaultAsync(u => u.Id == id);
         }
     }
 }

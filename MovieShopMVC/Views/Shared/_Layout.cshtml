@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject ApplicationCore.ServiceInterfaces.ICurrentUserService _currentUserService
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,8 +22,49 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                MovieGenres
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                @await Html.PartialAsync("_GetAllGenre");
+                            </div>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                    <ul class="nav justify-content-lg-end">
+                        <li class="nav-item">
+
+                            @{ 
+                                var userId = _currentUserService.UserId;
+
+                                if (userId == 0)
+                                {
+                                    <button type="button" class="btn btn-link">
+                                        <a asp-controller="Account" asp-action="Login"> Login </a>
+                                    </button> 
+                                }
+                                else
+                                {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Welcome back, @_currentUserService.FullName
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="user" asp-action="GetAllPurchases">Purchased Movies</a>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="user" asp-action="GetFavorites">Favorite Movies</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" >Change User Information</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item nav-link text-dark"asp-area="" asp-controller="Home" asp-action="Index">Logout</a>
+                                    </div>
+                                </li>
+                                } 
+                                }
+
                         </li>
                     </ul>
                 </div>
